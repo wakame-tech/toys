@@ -1,11 +1,10 @@
 import React from "react";
 import { Theme } from "../formats/model";
 import { useLotter } from "./hooks/useLotter";
-
-const opacity = (i: number) => Math.max(10 - i, 1) * 10;
+import { ThemeComponent } from "./ThemeComponent";
 
 const Lotter = () => {
-  const { next, theme, history, config } = useLotter();
+  const { next, history, config } = useLotter();
 
   return (
     <div
@@ -20,25 +19,25 @@ const Lotter = () => {
         </small>
 
         <div className="p-2 grid grid-cols-1 items-center">
-          <div className="pt-2 pb-[10vh] bold text-3rem text-center">
-            <p>{theme}</p>
-          </div>
-
           <div>
             {[...history]
               .map((h, i) => [h, i] as [Theme, number])
               .reverse()
               .map(([h, i]) => (
-                <div className="p-2" key={i}>
-                  <p
-                    className={`bold text-2rem opacity-${opacity(
-                      history.length - i
-                    )}
-                ${i % config.players === config.players - 1 ? "pb-4" : ""}
-                `}
-                  >
-                    {h}
-                  </p>
+                <div
+                  className={`bold p-2 ${
+                    i === history.length - 1
+                      ? "text-3rem text-center"
+                      : "text-2rem"
+                  }`}
+                  key={i}
+                >
+                  <ThemeComponent
+                    config={config}
+                    history={history}
+                    index={i}
+                    theme={h}
+                  />
                 </div>
               ))}
           </div>

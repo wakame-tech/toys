@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchThemes } from "../../formats/csv";
+import { fetchData } from "../../formats/csv";
 import { Config, Theme } from "../../formats/model";
 
 const getQuery = (key: string): string | null => {
@@ -27,15 +27,26 @@ export const useLotter = () => {
     themes: [],
   });
   const [history, setHistory] = useState<Theme[]>([]);
-  const [theme, setTheme] = useState("");
+
+  // const theme = history[history.length - 1];
 
   const setup = async () => {
     const url = getQueryOrPrompt("url", "URL?");
-    if (!url.endsWith(".csv")) {
+    if (!url.endsWith(".csv") && !url.endsWith("txt")) {
       alert("invalid url. must be a csv file");
       return;
     }
-    const themes = await fetchThemes(url);
+
+    const data = await fetchData(url);
+    const themes: Theme[] = data.map((value) => {
+      const isImage = (row: string): boolean =>
+        value.endsWith("png") || value.endsWith("jpg");
+      if (isImage(value)) {
+        return { type: "image", src: value };
+      } else {
+        return { type: "text", value };
+      }
+    });
     const players = parseInt(getQueryOrPrompt("players", "players?"));
     if (isNaN(players)) {
       alert("invalid player count");
@@ -55,13 +66,12 @@ export const useLotter = () => {
   const next = () => {
     const nextTheme =
       config.themes[Math.floor(Math.random() * config.themes.length)];
-    setHistory([...history, theme]);
-    setTheme(nextTheme);
+    setHistory([...history, nextTheme]);
   };
 
   return {
     config,
-    theme,
+    // theme,
     history,
     next,
   };
