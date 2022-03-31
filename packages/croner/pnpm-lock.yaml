@@ -1,0 +1,14 @@
+lockfileVersion: 5.3
+
+specifiers:
+  '@breejs/later': ^4.1.0
+
+dependencies:
+  '@breejs/later': 4.1.0
+
+packages:
+
+  /@breejs/later/4.1.0:
+    resolution: {integrity: sha512-QgGnZ9b7o4k0Ai1ZbTJWwZpZcFK9d+Gb+DyNt4UT9x6IEIs5HVu0iIlmgzGqN+t9MoJSpSPo9S/Mm51UtHr3JA==}
+    engines: {node: '>= 10'}
+    dev: false

@@ -1,0 +1,5 @@
+{
+	"dependencies": {
+		"@breejs/later": "^4.1.0"
+	}
+}
