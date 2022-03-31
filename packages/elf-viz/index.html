@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Elf Visualizer</title>
+</head>
+
+<body>
+    <input type="file" id="input" />
+    <pre id="result"></pre>
+
+    <script type="module">
+        import init, { parse_elf } from './pkg/elf_viz.js';
+        await init();
+
+        const input = document.getElementById('input')
+        input.addEventListener('change', async () => {
+            const file = input.files[0]
+            const data = await new Response(file).arrayBuffer()
+            const bin = new Uint8Array(data)
+            const elf = JSON.parse(parse_elf(bin))
+            const result = document.getElementById('result')
+            console.log(elf)
+            result.innerText = JSON.stringify(elf, null, 2)
+        })
+    </script>
+</body>
+
+</html>

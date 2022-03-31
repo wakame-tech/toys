@@ -1,0 +1,2 @@
+compile file:
+    gcc -Os -s -fdata-sections -ffunction-sections -Wl,--gc-sections {{file}}
