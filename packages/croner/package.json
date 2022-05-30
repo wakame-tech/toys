@@ -1,5 +1,15 @@
 {
 	"dependencies": {
 		"@breejs/later": "^4.1.0"
+	},
+	"scripts": {
+		"serve": "npm run build && firebase emulators:start --only functions",
+		"shell": "npm run build && firebase functions:shell",
+		"start": "npm run shell",
+		"deploy": "firebase deploy --only functions",
+		"logs": "firebase functions:log"
+	},
+	"devDependencies": {
+		"firebase-tools": "^10.7.0"
 	}
 }

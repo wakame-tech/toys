@@ -2,8 +2,11 @@ import * as functions from "firebase-functions";
 import fetch from "node-fetch";
 import * as webhook from "webhook-discord";
 
-export const shareUrl = functions.pubsub
-  .schedule("every 6 hours")
+process.env.TZ = "Asia/Tokyo";
+
+export const shareUrl = functions
+  .region("asia-northeast1")
+  .pubsub.schedule("0 9-23/3 * * *")
   .onRun(async (context) => {
     const urls = await fetch(process.env.API_ORIGIN!)
       .then((res) => res.text())
